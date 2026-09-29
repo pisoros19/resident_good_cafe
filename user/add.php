@@ -18,11 +18,38 @@ if (isset($_POST['save'])) {
     exit();
 }
 ?>
-<h2>Add Username</h2>
-<form method="post">
-    Username: <input type="text" name="username"><br>
-    Password: <input type="password" name="password"><br>
-    Phone: <input type="text" name="phone"><br>
-    Email: <input type="email" name="email"><br>
-    <input type="submit" name="save" value="Save">
-</form>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Add User</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+    <div class="navbar">
+        <a href="../dashboard.php">Dashboard</a>
+        <a href="../manun/index.php">Menu</a>
+        <a href="index.php">User</a>
+        <a href="../logout.php">Logout</a>
+    </div>
+    <div class="container">
+        <div class="card">
+            <h2>Add User</h2>
+            <form method="post">
+                <label>Username</label>
+                <input type="text" name="username" required>
+                <label>Password</label>
+                <input type="password" name="password" required>
+                <label>Phone</label>
+                <input type="text" name="phone" required>
+                <label>Email</label>
+                <input type="email" name="email" required>
+                <input type="submit" name="save" value="Save">
+            </form>
+            <a class="back" href="index.php">← Back</a>
+        </div>
+    </div>
+</body>
+
+</html>

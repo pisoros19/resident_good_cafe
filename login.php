@@ -17,14 +17,31 @@ if (isset($_POST['login'])) {
     }
 }
 ?>
-<h2>Admin Login</h2>
-<?php
-if (isset($error)) {
-    echo "<p>$error</p>";
-}
-?>
-<form method="post">
-    Username: <input type="text" name="username" required><br>
-    Password: <input type="password" name="password" required><br>
-    <input type="submit" name="login" value="Login">
-</form>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Admin Login</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="login-box">
+        <h2>Resident Good Cafe</h2>
+        <h3>Admin Login</h3>
+        <?php
+        if (isset($error)) {
+            echo "<p class='error'>$error</p>";
+        }
+        ?>
+        <form method="post">
+            <label>Username</label>
+            <input type="text" name="username" required>
+            <label>Password</label>
+            <input type="password" name="password" required>
+            <input type="submit" name="login" value="Login">
+        </form>
+    </div>
+</body>
+
+</html>

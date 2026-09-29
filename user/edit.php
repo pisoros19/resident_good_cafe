@@ -22,11 +22,38 @@ if (isset($_POST['update'])) {
     exit();
 }
 ?>
-<h2>Edit Username</h2>
-<form method="post">
-    Username: <input type="text" name="username" value="<?php echo $row['username']; ?>"><br>
-    Password: <input type="password" name="password" value="<?php echo $row['password']; ?>"><br>
-    Phone: <input type="text" name="phone" value="<?php echo $row['phone']; ?>"><br>
-    Email: <input type="email" name="email" value="<?php echo $row['email']; ?>"><br>
-    <input type="submit" name="update" value="Update">
-</form>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Edit User</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+    <div class="navbar">
+        <a href="../dashboard.php">Dashboard</a>
+        <a href="../manun/index.php">Menu</a>
+        <a href="index.php">User</a>
+        <a href="../logout.php">Logout</a>
+    </div>
+    <div class="container">
+        <div class="card">
+            <h2>Edit User</h2>
+            <form method="post">
+                <label>Username</label>
+                <input type="text" name="username" value="<?php echo $row['username']; ?>" required>
+                <label>Password</label>
+                <input type="password" name="password" value="<?php echo $row['password']; ?>" required>
+                <label>Phone</label>
+                <input type="text" name="phone" value="<?php echo $row['phone']; ?>" required>
+                <label>Email</label>
+                <input type="email" name="email" value="<?php echo $row['email']; ?>" required>
+                <input type="submit" name="update" value="Update">
+            </form>
+            <a class="back" href="index.php">← Back</a>
+        </div>
+    </div>
+</body>
+
+</html>

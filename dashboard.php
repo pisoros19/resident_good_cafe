@@ -5,12 +5,28 @@ if (!isset($_SESSION['username'])) {
     exit();
 }
 ?>
-<h2>Resident Good Cafe - Admin</h2>
-<nav>
-    <a href="manun/index.php">Menu</a> |
-    <a href="user/index.php">User</a> |
-    <a href="logout.php">Logout</a>
-</nav>
-<hr>
-<h3>Welcome, <?php echo $_SESSION['username']; ?>!</h3>
-<p>Welcome to the Admin System.</p>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="navbar">
+        <a href="dashboard.php">Dashboard</a>
+        <a href="manun/index.php">Menu</a>
+        <a href="user/index.php">User</a>
+        <a href="logout.php">Logout</a>
+    </div>
+    <div class="container">
+        <div class="card">
+            <h2>Admin Dashboard</h2>
+            <h3>Welcome, <?php echo $_SESSION['username']; ?>!</h3>
+            <p>Welcome to the Resident Good Cafe Admin System.</p>
+        </div>
+    </div>
+</body>
+
+</html>
