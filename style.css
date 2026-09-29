@@ -177,3 +177,12 @@ th {
     margin: 0;
     color: #ddd;
 }
+
+/* Food Image */
+
+.food-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+}

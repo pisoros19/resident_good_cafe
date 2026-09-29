@@ -5,18 +5,6 @@ if (!isset($_SESSION['username'])) {
     exit();
 }
 include 'db.php';
-
-if (isset($_POST['save'])) {
-    $menu_name = $_POST['menu_name'];
-    $category = $_POST['category'];
-    $price = $_POST['price'];
-    $status = $_POST['status'];
-
-    $conn->query("INSERT INTO menu (menu_name, category, price, status) VALUES ('$menu_name', '$category', '$price', '$status')");
-
-    header("Location: index.php");
-    exit();
-}
 ?>
 <!DOCTYPE html>
 <html>
@@ -27,29 +15,56 @@ if (isset($_POST['save'])) {
 </head>
 
 <body>
-    <div class="navbar">
+
+    <nav class="navbar">
         <a href="../dashboard.php">Dashboard</a>
         <a href="index.php">Menu</a>
         <a href="../user/index.php">User</a>
         <a href="../logout.php">Logout</a>
-    </div>
+    </nav>
+
     <div class="container">
         <div class="card">
             <h2>Add Menu</h2>
+
             <form method="post">
-                <label>Menu Name</label>
+                Menu Name:
                 <input type="text" name="menu_name" required>
-                <label>Category</label>
+
+                Category:
                 <input type="text" name="category" required>
-                <label>Price</label>
-                <input type="text" name="price" required>
-                <label>Status</label>
+
+                Price:
+                <input type="number" step="0.01" name="price" required>
+
+                Status:
                 <input type="text" name="status" required>
+
+                Image URL:
+                <input type="text" name="image_url" placeholder="Paste image URL here">
+
                 <input type="submit" name="save" value="Save">
             </form>
-            <a class="back" href="index.php">← Back</a>
+
+            <a href="index.php" class="back">Back to Menu</a>
         </div>
     </div>
+
 </body>
 
 </html>
+
+<?php
+if (isset($_POST['save'])) {
+    $menu_name = $_POST['menu_name'];
+    $category = $_POST['category'];
+    $price = $_POST['price'];
+    $status = $_POST['status'];
+    $image_url = $_POST['image_url'];
+
+    $conn->query("INSERT INTO menu (menu_name, category, price, status, image_url) VALUES ('$menu_name', '$category', '$price', '$status', '$image_url')");
+
+    header("Location: index.php");
+    exit();
+}
+?>
