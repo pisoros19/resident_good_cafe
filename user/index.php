@@ -1,9 +1,15 @@
-<?php include 'db.php'; ?>
-
+<?php
+session_start();
+if (!isset($_SESSION['username'])) {
+  header("Location: ../login.php");
+  exit();
+}
+include 'db.php';
+?>
 <h2>Username List</h2>
-
-<a href="add.php">Add New Username</a>
-
+<a href="add.php">Add New Username</a> |
+<a href="../dashboard.php">Dashboard</a> |
+<a href="../logout.php">Logout</a>
 <table border="1" cellpadding="10">
   <tr>
     <th>ID</th>
@@ -11,11 +17,10 @@
     <th>Password</th>
     <th>Phone</th>
     <th>Email</th>
+    <th>Action</th>
   </tr>
   <?php
-
   $result = $conn->query("SELECT * FROM users");
-
   while ($row = $result->fetch_assoc()) {
     echo "<tr>
     <td>" . $row['id'] . "</td>
@@ -24,10 +29,10 @@
     <td>" . $row['phone'] . "</td>
     <td>" . $row['email'] . "</td>
     <td>
-      <a href='edit.php?id=" . $row['id'] . "'>Edit</a> |
-      <a href='deleto.php?id=" . $row['id'] . "'>Delete</a>
+    <a href='edit.php?id=" . $row['id'] . "'>Edit</a> |
+    <a href='deleto.php?id=" . $row['id'] . "'>Delete</a>
     </td>
-  </tr>";
+    </tr>";
   }
   ?>
 </table>
