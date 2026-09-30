@@ -7,7 +7,11 @@ if (!isset($_SESSION['username'])) {
 include 'db.php';
 
 $id = $_GET['id'];
-$result = $conn->query("SELECT * FROM users WHERE id=$id");
+
+$stmt = $conn->prepare("SELECT * FROM users WHERE id = ?");
+$stmt->bind_param("i", $id);
+$stmt->execute();
+$result = $stmt->get_result();
 $row = $result->fetch_assoc();
 
 if (isset($_POST['update'])) {
@@ -16,7 +20,9 @@ if (isset($_POST['update'])) {
     $phone = $_POST['phone'];
     $email = $_POST['email'];
 
-    $conn->query("UPDATE users SET username='$username', password='$password', phone='$phone', email='$email' WHERE id=$id");
+    $stmt = $conn->prepare("UPDATE users SET username = ?, password = ?, phone = ?, email = ? WHERE id = ?");
+    $stmt->bind_param("ssssi", $username, $password, $phone, $email, $id);
+    $stmt->execute();
 
     header("Location: index.php");
     exit();
@@ -31,29 +37,38 @@ if (isset($_POST['update'])) {
 </head>
 
 <body>
-    <div class="navbar">
+
+    <nav class="navbar">
         <a href="../dashboard.php">Dashboard</a>
         <a href="../manun/index.php">Menu</a>
         <a href="index.php">User</a>
         <a href="../logout.php">Logout</a>
-    </div>
+    </nav>
+
     <div class="container">
         <div class="card">
             <h2>Edit User</h2>
+
             <form method="post">
-                <label>Username</label>
+                Username:
                 <input type="text" name="username" value="<?php echo $row['username']; ?>" required>
-                <label>Password</label>
+
+                Password:
                 <input type="password" name="password" value="<?php echo $row['password']; ?>" required>
-                <label>Phone</label>
+
+                Phone:
                 <input type="text" name="phone" value="<?php echo $row['phone']; ?>" required>
-                <label>Email</label>
+
+                Email:
                 <input type="email" name="email" value="<?php echo $row['email']; ?>" required>
+
                 <input type="submit" name="update" value="Update">
             </form>
-            <a class="back" href="index.php">← Back</a>
+
+            <a href="index.php" class="back">Back to User</a>
         </div>
     </div>
+
 </body>
 
 </html>

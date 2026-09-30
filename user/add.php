@@ -12,7 +12,9 @@ if (isset($_POST['save'])) {
     $phone = $_POST['phone'];
     $email = $_POST['email'];
 
-    $conn->query("INSERT INTO users (username,password,phone,email) VALUES ('$username','$password','$phone','$email')");
+    $stmt = $conn->prepare("INSERT INTO users (username, password, phone, email) VALUES (?, ?, ?, ?)");
+    $stmt->bind_param("ssss", $username, $password, $phone, $email);
+    $stmt->execute();
 
     header("Location: index.php");
     exit();
@@ -27,29 +29,38 @@ if (isset($_POST['save'])) {
 </head>
 
 <body>
-    <div class="navbar">
+
+    <nav class="navbar">
         <a href="../dashboard.php">Dashboard</a>
         <a href="../manun/index.php">Menu</a>
         <a href="index.php">User</a>
         <a href="../logout.php">Logout</a>
-    </div>
+    </nav>
+
     <div class="container">
         <div class="card">
             <h2>Add User</h2>
+
             <form method="post">
-                <label>Username</label>
+                Username:
                 <input type="text" name="username" required>
-                <label>Password</label>
+
+                Password:
                 <input type="password" name="password" required>
-                <label>Phone</label>
+
+                Phone:
                 <input type="text" name="phone" required>
-                <label>Email</label>
+
+                Email:
                 <input type="email" name="email" required>
+
                 <input type="submit" name="save" value="Save">
             </form>
-            <a class="back" href="index.php">← Back</a>
+
+            <a href="index.php" class="back">Back to User</a>
         </div>
     </div>
+
 </body>
 
 </html>
