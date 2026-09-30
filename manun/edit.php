@@ -7,8 +7,27 @@ if (!isset($_SESSION['username'])) {
 include 'db.php';
 
 $id = $_GET['id'];
-$result = $conn->query("SELECT * FROM menu WHERE id=$id");
+
+$stmt = $conn->prepare("SELECT * FROM menu WHERE id = ?");
+$stmt->bind_param("i", $id);
+$stmt->execute();
+$result = $stmt->get_result();
 $row = $result->fetch_assoc();
+
+if (isset($_POST['update'])) {
+    $menu_name = $_POST['menu_name'];
+    $category = $_POST['category'];
+    $price = $_POST['price'];
+    $status = $_POST['status'];
+    $image_url = $_POST['image_url'];
+
+    $stmt = $conn->prepare("UPDATE menu SET menu_name = ?, category = ?, price = ?, status = ?, image_url = ? WHERE id = ?");
+    $stmt->bind_param("ssdssi", $menu_name, $category, $price, $status, $image_url, $id);
+    $stmt->execute();
+
+    header("Location: index.php");
+    exit();
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -58,18 +77,3 @@ $row = $result->fetch_assoc();
 </body>
 
 </html>
-
-<?php
-if (isset($_POST['update'])) {
-    $menu_name = $_POST['menu_name'];
-    $category = $_POST['category'];
-    $price = $_POST['price'];
-    $status = $_POST['status'];
-    $image_url = $_POST['image_url'];
-
-    $conn->query("UPDATE menu SET menu_name='$menu_name', category='$category', price='$price', status='$status', image_url='$image_url' WHERE id=$id");
-
-    header("Location: index.php");
-    exit();
-}
-?>

@@ -5,6 +5,10 @@ if (!isset($_SESSION['username'])) {
   exit();
 }
 include 'db.php';
+
+$stmt = $conn->prepare("SELECT * FROM menu");
+$stmt->execute();
+$result = $stmt->get_result();
 ?>
 <!DOCTYPE html>
 <html>
@@ -41,8 +45,6 @@ include 'db.php';
         </tr>
 
         <?php
-        $result = $conn->query("SELECT * FROM menu");
-
         while ($row = $result->fetch_assoc()) {
           $image = !empty($row['image_url']) ? $row['image_url'] : 'https://via.placeholder.com/100x100?text=Food';
 

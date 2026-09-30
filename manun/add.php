@@ -5,6 +5,21 @@ if (!isset($_SESSION['username'])) {
     exit();
 }
 include 'db.php';
+
+if (isset($_POST['save'])) {
+    $menu_name = $_POST['menu_name'];
+    $category = $_POST['category'];
+    $price = $_POST['price'];
+    $status = $_POST['status'];
+    $image_url = $_POST['image_url'];
+
+    $stmt = $conn->prepare("INSERT INTO menu (menu_name, category, price, status, image_url) VALUES (?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssdss", $menu_name, $category, $price, $status, $image_url);
+    $stmt->execute();
+
+    header("Location: index.php");
+    exit();
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -53,18 +68,3 @@ include 'db.php';
 </body>
 
 </html>
-
-<?php
-if (isset($_POST['save'])) {
-    $menu_name = $_POST['menu_name'];
-    $category = $_POST['category'];
-    $price = $_POST['price'];
-    $status = $_POST['status'];
-    $image_url = $_POST['image_url'];
-
-    $conn->query("INSERT INTO menu (menu_name, category, price, status, image_url) VALUES ('$menu_name', '$category', '$price', '$status', '$image_url')");
-
-    header("Location: index.php");
-    exit();
-}
-?>

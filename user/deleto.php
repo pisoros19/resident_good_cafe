@@ -7,7 +7,10 @@ if (!isset($_SESSION['username'])) {
 include 'db.php';
 
 $id = $_GET['id'];
-$conn->query("DELETE FROM users WHERE id=$id");
+
+$stmt = $conn->prepare("DELETE FROM users WHERE id = ?");
+$stmt->bind_param("i", $id);
+$stmt->execute();
 
 header("Location: index.php");
 exit();
